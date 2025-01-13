@@ -75,6 +75,11 @@ TESTS = tests
 endif
 
 if USE_ECMULT_STATIC_PRECOMPUTATION
+
+# Initialize the variables before appending
+CPPFLAGS_FOR_BUILD = 
+CFLAGS_FOR_BUILD = 
+
 CPPFLAGS_FOR_BUILD +=-I$(top_srcdir)
 CFLAGS_FOR_BUILD += -Wall -Wextra -Wno-unused-function
 
