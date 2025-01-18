@@ -15,7 +15,8 @@
 #include <memenv.h>
 #include <stdint.h>
 
-void HandleError(const leveldb::Status& status) throw(dbwrapper_error)
+// Remove noexcept from here as well
+void HandleError(const leveldb::Status& status)
 {
     if (status.ok())
         return;
@@ -28,6 +29,8 @@ void HandleError(const leveldb::Status& status) throw(dbwrapper_error)
         throw dbwrapper_error("Database entry missing");
     throw dbwrapper_error("Unknown database error");
 }
+
+
 
 static leveldb::Options GetOptions(size_t nCacheSize)
 {
@@ -102,7 +105,7 @@ CDBWrapper::~CDBWrapper()
     options.env = NULL;
 }
 
-bool CDBWrapper::WriteBatch(CDBBatch& batch, bool fSync) throw(dbwrapper_error)
+bool CDBWrapper::WriteBatch(CDBBatch& batch, bool fSync) noexcept
 {
     leveldb::Status status = pdb->Write(fSync ? syncoptions : writeoptions, &batch.batch);
     HandleError(status);
