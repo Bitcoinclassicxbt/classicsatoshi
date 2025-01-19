@@ -77,13 +77,13 @@ public:
         consensus.BIP34Height = 0x210c;
         consensus.BIP34Hash = uint256S("0x000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f");
         consensus.powLimit = uint256S("00000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
-        consensus.nPowTargetTimespan = 6 * 60 * 60; // two weeks but change back
-        consensus.nPowTargetSpacing = 10 * 60; //changeback to 10
+        consensus.nPowTargetTimespan = 6 * 60 * 60; // 6 hours
+        consensus.nPowTargetSpacing = 10 * 60; //10 mins
         consensus.fPowAllowMinDifficultyBlocks = false;
         consensus.fPowNoRetargeting = false;
 
         consensus.nOldPowTargetTimespan = 60;        // Old timespan (before the switch, in seconds)
-        consensus.nNewPowTargetTimespan = 10 * 60;       // New timespan (after the switch, in seconds)
+        consensus.nNewPowTargetTimespan = 6 * 60 * 60;       // New timespan (after the switch, in seconds)
 
         consensus.nSwitchHeight = 97191;
         /** 
