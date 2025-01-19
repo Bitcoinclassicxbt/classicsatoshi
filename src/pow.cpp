@@ -102,11 +102,11 @@ unsigned int GetNextWorkRequired(const CBlockIndex* pindexLast, const CBlockHead
         // Determine the correct target timespan based on block height
     int nPowTargetTimespan;
     if (pindexLast->nHeight < 97000) {
-        nPowTargetTimespan = 600; // 10 minutes for blocks 0 to 96999
+        nPowTargetTimespan = 14 * 24 * 60 * 60; // 10 minutes for blocks 0 to 96999
     } else if (pindexLast->nHeight <= 97191) {
         nPowTargetTimespan = 60; // 1 minute for blocks 97000 to 97191
     } else {
-        nPowTargetTimespan = 600; // 10 minutes for blocks 97192 and onward
+        nPowTargetTimespan = 6 * 60 * 60; // 10 minutes for blocks 97192 and onward
     }
 
     // Only change once per difficulty adjustment interval
@@ -152,11 +152,11 @@ unsigned int CalculateNextWorkRequired(const CBlockIndex* pindexLast, int64_t nF
 
     // Set target timespan based on block height (after block 97000)
     if (pindexLast->nHeight < 97000) {
-        nPowTargetTimespan = 600;  // 10 minutes for blocks 0 to 96999
+        nPowTargetTimespan = 14 * 24 * 60 * 60;  // 10 minutes for blocks 0 to 96999
     } else if (pindexLast->nHeight <= 97191) {
         nPowTargetTimespan = 60;   // 1 minute for blocks 97000 to 97191
     } else {
-        nPowTargetTimespan = 600;  // 10 minutes for blocks 97192 and onward
+        nPowTargetTimespan = 6 * 60 * 60;  // 10 minutes for blocks 97192 and onward
     }
 
     // If retargeting is disabled globally, return the previous block's difficulty
@@ -193,8 +193,8 @@ unsigned int CalculateNextWorkRequired(const CBlockIndex* pindexLast, int64_t nF
     bnNew /= nPowTargetTimespan;
 
     // Limit the adjustment to prevent drastic changes
-    const arith_uint256 bnMaxStepIncrease = bnOld * 1.1;  // Limit increase to 10%
-    const arith_uint256 bnMaxStepDecrease = bnOld * 0.9;  // Limit decrease to 10%
+    const arith_uint256 bnMaxStepIncrease = bnOld * 4;  // Limit increase to 400%
+    const arith_uint256 bnMaxStepDecrease = bnOld * 0.25;  // Limit decrease to 75%
 
     // Ensure difficulty does not deviate too much from the previous block
     if (bnNew > bnMaxStepIncrease) {
