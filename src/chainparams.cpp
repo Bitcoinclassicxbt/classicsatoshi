@@ -81,6 +81,7 @@ public:
         consensus.nPowTargetSpacing = 10 * 60; //10 mins
         consensus.fPowAllowMinDifficultyBlocks = false;
         consensus.fPowNoRetargeting = false;
+        consensus.minchainwork = uint256S("0000000000000000000000000000000000000000000004fd9e9fc4ede0e39de5");
 
         consensus.nOldPowTargetTimespan = 60;        // Old timespan (before the switch, in seconds)
         consensus.nNewPowTargetTimespan = 6 * 60 * 60;       // New timespan (afte the switch, in seconds)
