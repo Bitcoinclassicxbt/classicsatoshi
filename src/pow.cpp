@@ -147,7 +147,13 @@ unsigned int CalculateNextWorkRequired(const CBlockIndex* pindexLast, int64_t nF
     // Disable difficulty retargeting for blocks before 97000
     if (pindexLast->nHeight < 97000) {
         //LogPrintf("Syncing blocks before block 97000, ignoring difficulty retargeting.\n");
-        return pindexLast->nBits;  // Keep the same difficulty for blocks before 97000
+        return pindexLast->nBits;  // Keep the same difficulty for blocks before 97000 112239
+    }
+
+    // Special rule for block height 112,239
+    if (pindexLast->nHeight == 112239) {
+        // Return difficulty divided by 3 for block 112,239
+        return pindexLast->nBits / 3;
     }
 
     // Set target timespan based on block height (after block 97000)
@@ -193,8 +199,8 @@ unsigned int CalculateNextWorkRequired(const CBlockIndex* pindexLast, int64_t nF
     bnNew /= nPowTargetTimespan;
 
     // Limit the adjustment to prevent drastic changes
-    const arith_uint256 bnMaxStepIncrease = bnOld * 4;  // Limit increase to 400%
-    const arith_uint256 bnMaxStepDecrease = bnOld * 2;  // Limit decrease to 200%
+    const arith_uint256 bnMaxStepIncrease = bnOld * 2;  // Limit increase to 400%
+    const arith_uint256 bnMaxStepDecrease = bnOld * 1;  // Limit decrease to 200%
 
     // Ensure difficulty does not deviate too much from the previous block
     if (bnNew > bnMaxStepIncrease) {
