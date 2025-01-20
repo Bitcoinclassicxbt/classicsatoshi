@@ -194,7 +194,7 @@ unsigned int CalculateNextWorkRequired(const CBlockIndex* pindexLast, int64_t nF
 
     // Limit the adjustment to prevent drastic changes
     const arith_uint256 bnMaxStepIncrease = bnOld * 4;  // Limit increase to 400%
-    const arith_uint256 bnMaxStepDecrease = bnOld * 0.25;  // Limit decrease to 75%
+    const arith_uint256 bnMaxStepDecrease = bnOld * 2;  // Limit decrease to 200%
 
     // Ensure difficulty does not deviate too much from the previous block
     if (bnNew > bnMaxStepIncrease) {
