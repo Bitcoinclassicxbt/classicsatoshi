@@ -97,6 +97,7 @@ unsigned int GetNextWorkRequired(const CBlockIndex* pindexLast, const CBlockHead
     if (pindexLast == NULL)
         return nProofOfWorkLimit;
 
+
     // If block height is greater than the threshold, apply the new difficulty parameters
     //int nPowTargetTimespan = (pindexLast->nHeight >= params.nSwitchHeight) ? params.nNewPowTargetTimespan : params.nOldPowTargetTimespan;
         // Determine the correct target timespan based on block height
@@ -143,18 +144,35 @@ unsigned int GetNextWorkRequired(const CBlockIndex* pindexLast, const CBlockHead
 unsigned int CalculateNextWorkRequired(const CBlockIndex* pindexLast, int64_t nFirstBlockTime, const Consensus::Params& params)
 {
     int nPowTargetTimespan;
+    unsigned int nProofOfWorkLimit = UintToArith256(params.minchainwork).GetCompact();
 
     // Disable difficulty retargeting for blocks before 97000
-    if (pindexLast->nHeight < 97000) {
+        if (pindexLast->nHeight < 97000) {
         //LogPrintf("Syncing blocks before block 97000, ignoring difficulty retargeting.\n");
-        return pindexLast->nBits;  // Keep the same difficulty for blocks before 97000 112239
-    }
+        return pindexLast->nBits;  // Keep the same difficulty for blocks before 97000
+        }
 
-    // Special rule for block height 112,239
-    if (pindexLast->nHeight == 112239) {
-        // Return difficulty divided by 3 for block 112,239
-        return pindexLast->nBits / 3;
-    }
+        if (pindexLast->nHeight > 112247 && pindexLast->nHeight < 112260) {
+            return nProofOfWorkLimit;
+        }
+
+
+        // Special case for block 112239: reduce difficulty by 3
+    /*if (pindexLast->nHeight >= 112246 && pindexLast->nHeight <= 112260) {
+        LogPrintf("  Block height 112246 to 112260 detected, reducing difficulty by a factor of 3.\n");
+        
+        // Convert the current difficulty to arith_uint256, divide by 3, then convert back to compact format
+        arith_uint256 bnOld;
+        bnOld.SetCompact(pindexLast->nBits);
+        bnOld /= 3;
+
+        // Log the reduced difficulty
+        LogPrintf("  New difficulty for block 112246 to 112260: %s\n", bnOld.ToString());
+
+        // Return the new difficulty as a compact format
+        return bnOld.GetCompact();
+    }*/
+
 
     // Set target timespan based on block height (after block 97000)
     if (pindexLast->nHeight < 97000) {
