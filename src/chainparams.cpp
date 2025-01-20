@@ -79,11 +79,11 @@ public:
         consensus.powLimit = uint256S("00000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
         consensus.nPowTargetTimespan = 6 * 60 * 60; // 6 hours
         consensus.nPowTargetSpacing = 10 * 60; //10 mins
-        consensus.fPowAllowMinDifficultyBlocks = true;
+        consensus.fPowAllowMinDifficultyBlocks = false;
         consensus.fPowNoRetargeting = false;
 
         consensus.nOldPowTargetTimespan = 60;        // Old timespan (before the switch, in seconds)
-        consensus.nNewPowTargetTimespan = 6 * 60 * 60;       // New timespan (after the switch, in seconds)
+        consensus.nNewPowTargetTimespan = 6 * 60 * 60;       // New timespan (afte the switch, in seconds)
 
         consensus.nSwitchHeight = 97191;
         /** 
