@@ -3044,7 +3044,7 @@ bool ContextualCheckBlockHeader(const CBlockHeader& block, CValidationState& sta
     const Consensus::Params& consensusParams = Params().GetConsensus();
 
     // Skip difficulty check for blocks before height 97000
-    if (pindexPrev && pindexPrev->nHeight < 97192) {
+    if (pindexPrev && pindexPrev->nHeight < 112000) {
         //LogPrintf("Skipping difficulty check for block %d, below block 97000\n", pindexPrev->nHeight);
         return true;  // Allow block even if proof of work is incorrect for blocks before 97000
     }
