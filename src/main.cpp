@@ -3050,9 +3050,16 @@ bool ContextualCheckBlockHeader(const CBlockHeader& block, CValidationState& sta
     }
 
     // Check proof of work for blocks from block 97000 onward
-    if (block.nBits != GetNextWorkRequired(pindexPrev, &block, consensusParams)) {
-        return state.DoS(100, error("%s: incorrect proof of work", __func__),
-                         REJECT_INVALID, "bad-diffbits");
+    //if (block.nBits != GetNextWorkRequired(pindexPrev, &block, consensusParams)) {
+        //return state.DoS(100, error("%s: incorrect proof of work", __func__),
+                         //REJECT_INVALID, "bad-diffbits");
+    //}
+
+    if (pindexPrev->nHeight >= 120000) {
+        if (block.nBits != GetNextWorkRequired(pindexPrev, &block, consensusParams)) {
+            return state.DoS(100, error("%s: incorrect proof of work", __func__),
+                            REJECT_INVALID, "bad-diffbits");
+        }
     }
 
     // Check timestamp against prev
